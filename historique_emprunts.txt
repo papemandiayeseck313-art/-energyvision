@@ -1,6 +1,0 @@
-EMPRUNT  | 2026-03-26 | ISBN-001 | Les Misérables | L001 | Aminata Diallo | Retour prévu : 2026-04-09
-EMPRUNT  | 2026-03-26 | ISBN-002 | Le Petit Prince | L002 | Ibrahima Ndiaye | Retour prévu : 2026-04-02
-EMPRUNT  | 2026-03-26 | ISBN-003 | L'Étranger | L003 | Fatou Sow | Retour prévu : 2026-04-09
-RETOUR   | 2026-03-26 | ISBN-002 | Le Petit Prince | L002 | Ibrahima Ndiaye | Dans les délais
-EMPRUNT  | 2026-03-06 | ISBN-004 | Bonjour Tristesse | L001 | Aminata Diallo | Retour prévu : 2026-03-20
-RETOUR   | 2026-03-26 | ISBN-004 | Bonjour Tristesse | L001 | Aminata Diallo | EN RETARD (6 jour(s))

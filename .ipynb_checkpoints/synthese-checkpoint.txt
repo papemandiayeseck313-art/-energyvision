@@ -1,4 +1,0 @@
-Alice : 15.67
-Bob : 11.00
-Claire : 16.50
-David : 14.00

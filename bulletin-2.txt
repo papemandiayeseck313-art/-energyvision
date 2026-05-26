@@ -1,4 +1,0 @@
-Alice;18
-Bob;10
-David;14
-Claire;17
