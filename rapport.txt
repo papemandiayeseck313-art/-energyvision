@@ -1,0 +1,9 @@
+=== RAPPORT DES NOTES ===
+
+Alice : 14
+Bob : 12
+Claire : 16
+
+Moyenne générale : 14.00
+
+=== FIN DU RAPPORT ===
