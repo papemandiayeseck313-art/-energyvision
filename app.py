@@ -1,4 +1,3 @@
-cat > /Users/papemandiayeseck/bigdata_project/app.py << 'ENDOFFILE'
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -142,4 +141,3 @@ elif page == "ℹ️ À propos":
     <p><b>Pape Mandiaye Seck</b><br>Étudiant en L1 Big Data<br>Dakar Institute of Technology · 2025/2026</p>
     </div>
     """, unsafe_allow_html=True)
-ENDOFFILE
