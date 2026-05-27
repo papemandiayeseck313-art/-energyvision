@@ -76,7 +76,6 @@ with st.sidebar:
 
     st.markdown("### 📌 Navigation")
     page = st.radio("", ["📊 Tableau de bord", "🤖 Prédiction ML", "ℹ️ À propos"])
-
 # ── Chargement données ──────────────────────────────────────────
 @st.cache_data
 def load_data():
@@ -89,6 +88,8 @@ def load_data():
     df = df.set_index('Datetime')
     df = df.dropna()
     return df
+
+df = load_data()  
 
 # ── Entraînement modèle ─────────────────────────────────────────
 @st.cache_resource
