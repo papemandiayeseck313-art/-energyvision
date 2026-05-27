@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import sqlite3
 from sklearn.ensemble import RandomForestRegressor
 
 st.set_page_config(page_title="EnergyVision", page_icon="⚡", layout="wide")
@@ -68,7 +67,7 @@ if page == "📊 Tableau de bord":
     with c3:
         st.markdown(f"<div class='metric-box'><p>Conso max (kW)</p><h2>{df['Global_active_power'].max():.2f}</h2></div>", unsafe_allow_html=True)
     with c4:
-        st.markdown("<div class='metric-box'><p>Période</p><h2 style='font-size:1.1rem'>2006–2010</h2></div>", unsafe_allow_html=True)
+        st.markdown("<div class='metric-box'><p>Période</p><h2 style='font-size:1.1rem'>2006-2010</h2></div>", unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("### 📈 Consommation journalière moyenne")
     daily = df['Global_active_power'].resample('D').mean()
@@ -78,7 +77,8 @@ if page == "📊 Tableau de bord":
     ax.plot(daily, color='#1e90ff', linewidth=0.8)
     ax.set_ylabel('kW', color='#a0b4cc')
     ax.tick_params(colors='#a0b4cc')
-    for spine in ax.spines.values(): spine.set_edgecolor('#1e90ff22')
+    for spine in ax.spines.values():
+        spine.set_edgecolor('#1e90ff22')
     plt.tight_layout()
     st.pyplot(fig)
     st.markdown("### 🕐 Consommation moyenne par heure")
@@ -92,13 +92,15 @@ if page == "📊 Tableau de bord":
     ax2.set_ylabel('kW', color='#a0b4cc')
     ax2.set_xticks(range(0, 24))
     ax2.tick_params(colors='#a0b4cc')
-    for spine in ax2.spines.values(): spine.set_edgecolor('#1e90ff22')
+    for spine in ax2.spines.values():
+        spine.set_edgecolor('#1e90ff22')
     plt.tight_layout()
     st.pyplot(fig2)
     st.markdown("### 🌍 Consommation par saison")
-    saison_map = {12:'Hiver',1:'Hiver',2:'Hiver',3:'Printemps',4:'Printemps',5:'Printemps',6:'Été',7:'Été',8:'Été',9:'Automne',10:'Automne',11:'Automne'}
-    df['saison'] = df.index.month.map(saison_map)
-    saison_data = df.groupby('saison')['Global_active_power'].mean().sort_values(ascending=False)
+    saison_map = {12:'Hiver',1:'Hiver',2:'Hiver',3:'Printemps',4:'Printemps',5:'Printemps',6:'Ete',7:'Ete',8:'Ete',9:'Automne',10:'Automne',11:'Automne'}
+    df2 = df.copy()
+    df2['saison'] = df2.index.month.map(saison_map)
+    saison_data = df2.groupby('saison')['Global_active_power'].mean().sort_values(ascending=False)
     colors = ['#1e90ff','#00d4aa','#f39c12','#e74c3c']
     fig3, ax3 = plt.subplots(figsize=(8, 3.5))
     fig3.patch.set_facecolor('#0a0f1e')
@@ -106,7 +108,8 @@ if page == "📊 Tableau de bord":
     ax3.bar(saison_data.index, saison_data.values, color=colors)
     ax3.set_ylabel('kW', color='#a0b4cc')
     ax3.tick_params(colors='#a0b4cc')
-    for spine in ax3.spines.values(): spine.set_edgecolor('#1e90ff22')
+    for spine in ax3.spines.values():
+        spine.set_edgecolor('#1e90ff22')
     plt.tight_layout()
     st.pyplot(fig3)
 
@@ -115,29 +118,29 @@ elif page == "🤖 Prédiction ML":
     st.markdown("Ajuste les paramètres pour prédire la consommation électrique.")
     col1, col2, col3 = st.columns(3)
     with col1:
-        heure = st.slider("🕐 Heure", 0, 23, 12)
+        heure = st.slider("Heure", 0, 23, 12)
     with col2:
-        mois = st.slider("📅 Mois", 1, 12, 6)
+        mois = st.slider("Mois", 1, 12, 6)
     with col3:
-        jour = st.slider("📆 Jour de la semaine", 0, 6, 0, help="0=Lundi ... 6=Dimanche")
+        jour = st.slider("Jour de la semaine", 0, 6, 0, help="0=Lundi ... 6=Dimanche")
     saison_input = {12:0,1:0,2:0,3:1,4:1,5:1,6:2,7:2,8:2,9:3,10:3,11:3}[mois]
     input_data = pd.DataFrame([[heure, jour, mois, 2009, saison_input, 241.0, 4.6, 1.0, 1.0, 6.0]], columns=['heure','jour_semaine','mois','annee','saison','Voltage','Global_intensity','Sub_metering_1','Sub_metering_2','Sub_metering_3'])
     prediction = model.predict(input_data)[0]
-    st.markdown(f"<div class='metric-box' style='max-width:400px; margin: 30px auto'><p>⚡ Consommation prédite</p><h2>{prediction:.3f} kW</h2><p>Heure {heure}h · Mois {mois} · Jour {jour}</p></div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='metric-box' style='max-width:400px; margin: 30px auto'><p>Consommation predite</p><h2>{prediction:.3f} kW</h2><p>Heure {heure}h · Mois {mois} · Jour {jour}</p></div>", unsafe_allow_html=True)
 
 elif page == "ℹ️ À propos":
-    st.markdown("<h1 style='color:#1e90ff'>ℹ️ À propos du projet</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color:#1e90ff'>ℹ️ A propos du projet</h1>", unsafe_allow_html=True)
     st.markdown("""
     <div style='background:#0d1a2e; border:1px solid #1e90ff33; border-radius:12px; padding:28px; line-height:1.9'>
-    <h3 style='color:#1e90ff'>⚡ EnergyVision</h3>
-    <p>Ce projet analyse et prédit la consommation électrique d'un foyer résidentiel à partir d'un jeu de données réel de <b>2 075 259 mesures</b> collectées entre 2006 et 2010 (source : UCI Machine Learning Repository).</p>
-    <h4 style='color:#00d4aa'>🎯 Objectifs</h4>
-    <ul><li>Analyser les tendances et patterns de consommation</li><li>Identifier les pics de consommation par heure, jour et saison</li><li>Prédire la consommation grâce au Machine Learning</li></ul>
-    <h4 style='color:#00d4aa'>🛠️ Technologies utilisées</h4>
-    <ul><li><b>Python</b> — Pandas, NumPy, Matplotlib</li><li><b>SQL</b> — SQLite via SQLAlchemy</li><li><b>Machine Learning</b> — Scikit-learn (Régression Linéaire, Random Forest), XGBoost</li><li><b>Web App</b> — Streamlit</li></ul>
-    <h4 style='color:#00d4aa'>📊 Résultats des modèles</h4>
-    <ul><li>Régression Linéaire — R² : 0.9982</li><li>XGBoost — R² : 0.9992</li><li><b>Random Forest — R² : 0.9994 🏆 Meilleur modèle</b></li></ul>
-    <h4 style='color:#00d4aa'>👤 Auteur</h4>
-    <p><b>Pape Mandiaye Seck</b><br>Étudiant en L1 Big Data<br>Dakar Institute of Technology · 2025/2026</p>
+    <h3 style='color:#1e90ff'>EnergyVision</h3>
+    <p>Ce projet analyse et predit la consommation electrique d un foyer residentiel a partir d un jeu de donnees reel de <b>2 075 259 mesures</b> collectees entre 2006 et 2010 (source : UCI Machine Learning Repository).</p>
+    <h4 style='color:#00d4aa'>Objectifs</h4>
+    <ul><li>Analyser les tendances et patterns de consommation</li><li>Identifier les pics de consommation par heure, jour et saison</li><li>Predire la consommation grace au Machine Learning</li></ul>
+    <h4 style='color:#00d4aa'>Technologies utilisees</h4>
+    <ul><li><b>Python</b> — Pandas, NumPy, Matplotlib</li><li><b>SQL</b> — SQLite via SQLAlchemy</li><li><b>Machine Learning</b> — Scikit-learn (Regression Lineaire, Random Forest), XGBoost</li><li><b>Web App</b> — Streamlit</li></ul>
+    <h4 style='color:#00d4aa'>Resultats des modeles</h4>
+    <ul><li>Regression Lineaire — R2 : 0.9982</li><li>XGBoost — R2 : 0.9992</li><li><b>Random Forest — R2 : 0.9994 Meilleur modele</b></li></ul>
+    <h4 style='color:#00d4aa'>Auteur</h4>
+    <p><b>Pape Mandiaye Seck</b><br>Etudiant en L1 Big Data<br>Dakar Institute of Technology · 2025/2026</p>
     </div>
     """, unsafe_allow_html=True)
