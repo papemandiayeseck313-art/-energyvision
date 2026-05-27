@@ -80,13 +80,15 @@ with st.sidebar:
 # ── Chargement données ──────────────────────────────────────────
 @st.cache_data
 def load_data():
-    conn = sqlite3.connect('energyvision.db')
-    df = pd.read_sql("SELECT * FROM consommation", conn)
-    df['Datetime'] = pd.to_datetime(df['Datetime'])
+    url = "https://archive.ics.uci.edu/ml/machine-learning-databases/00235/household_power_consumption.zip"
+    df = pd.read_csv(url, sep=';', na_values='?', low_memory=False,
+                     compression='zip')
+    df['Datetime'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], 
+                                     format='%d/%m/%Y %H:%M:%S')
+    df = df.drop(columns=['Date', 'Time'])
     df = df.set_index('Datetime')
+    df = df.dropna()
     return df
-
-df = load_data()
 
 # ── Entraînement modèle ─────────────────────────────────────────
 @st.cache_resource
