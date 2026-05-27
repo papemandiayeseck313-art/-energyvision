@@ -28,8 +28,8 @@ with st.sidebar:
 
 @st.cache_data
 def load_data():
-    url = "https://archive.ics.uci.edu/ml/machine-learning-databases/00235/household_power_consumption.zip"
-    df = pd.read_csv(url, sep=';', na_values='?', low_memory=False, compression='zip')
+    url = "https://raw.githubusercontent.com/papemandiayeseck313-art/-energyvision/main/data.csv"
+    df = pd.read_csv(url, sep=';', na_values='?', low_memory=False)
     df['Datetime'] = pd.to_datetime(df['Date'] + ' ' + df['Time'], format='%d/%m/%Y %H:%M:%S')
     df = df.drop(columns=['Date', 'Time'])
     df = df.set_index('Datetime')
