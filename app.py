@@ -152,18 +152,20 @@ elif page == "Analyse mensuelle":
     plt.tight_layout()
     st.pyplot(fig)
     st.markdown("### Consommation moyenne par mois de l'annee")
-    mois_noms = ['Jan','Fev','Mar','Avr','Mai','Jun','Jul','Aou','Sep','Oct','Nov','Dec']
+    mois_disponibles = sorted(df.index.month.unique())
+    mois_dict = {1:'Jan',2:'Fev',3:'Mar',4:'Avr',5:'Mai',6:'Jun',7:'Jul',8:'Aou',9:'Sep',10:'Oct',11:'Nov',12:'Dec'}
+    mois_noms_list = [mois_dict[m] for m in mois_disponibles]
     monthly_avg = df.groupby(df.index.month)['Global_active_power'].mean()
     colors_m = ['#1e90ff' if v >= monthly_avg.mean() else '#00d4aa' for v in monthly_avg.values]
     fig2, ax2 = make_fig(11, 3.5)
-    ax2.bar(mois_noms, monthly_avg.values, color=colors_m, width=0.6)
+    ax2.bar(mois_noms_list, monthly_avg.values, color=colors_m, width=0.6)
     ax2.axhline(y=monthly_avg.mean(), color='#f39c12', linewidth=1.5, linestyle='--', label='Moyenne annuelle')
     ax2.set_ylabel('kW', color='#a0b4cc')
     ax2.legend(facecolor='#0d1a2e', edgecolor='#1e90ff33', labelcolor='#a0b4cc')
     ax2.grid(axis='y', color='#1e90ff11', linewidth=0.5)
     plt.tight_layout()
     st.pyplot(fig2)
-    st.markdown("<div class='insight-box'>Bleu = au-dessus de la moyenne | Vert = en-dessous. Decembre-Janvier sont les mois les plus energivores.</div>", unsafe_allow_html=True)
+    st.markdown("<div class='insight-box'>Bleu = au-dessus de la moyenne | Vert = en-dessous.</div>", unsafe_allow_html=True)
     st.markdown("<div class='footer'>EnergyVision - Pape Mandiaye Seck - L1 Big Data - Dakar Institute of Technology - 2025/2026</div>", unsafe_allow_html=True)
 
 elif page == "Prediction ML":
